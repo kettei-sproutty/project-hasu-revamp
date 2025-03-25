@@ -1,0 +1,13 @@
+[package]
+name = "profile-service"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-graphql = { workspace = true }
+async-graphql-axum = { workspace = true }
+axum = { workspace = true }
+dotenv = { workspace = true }
+sqlx = { workspace = true }
+tokio = { workspace = true }
+uuid = "1.16.0"
