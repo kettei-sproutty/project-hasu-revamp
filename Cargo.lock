@@ -2398,7 +2398,10 @@ dependencies = [
  "async-graphql",
  "async-graphql-axum",
  "axum",
+ "dotenv",
+ "sqlx",
  "tokio",
+ "uuid",
 ]
 
 [[package]]

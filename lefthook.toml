@@ -1,0 +1,11 @@
+[pre-commit]
+parallel = true
+
+[pre-commit.commands.check]
+use_stdin = true
+run = "cargo clippy --workspace --all-targets --all-features && git update-index --again"
+stage_fixed = true
+
+[commit-msg.commands.check-toml]
+glob = "*.toml"
+run = "taplo check {staged_files}"

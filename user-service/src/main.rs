@@ -1,46 +1,38 @@
 use async_graphql::http::GraphiQLSource;
-use async_graphql::{EmptyMutation, EmptySubscription, ID, Object, Schema, SimpleObject};
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
-use axum::response::IntoResponse;
-use axum::routing::get;
-use axum::{Extension, Router};
+use axum::{Extension, Router, response::IntoResponse, routing::get};
 
-#[derive(SimpleObject)]
-struct Profile {
-  id: ID,
-}
-
-struct Query;
-
-#[Object]
-impl Query {
-  async fn me(&self) -> Profile {
-    Profile {
-      id: ID("123".into()),
-    }
-  }
-}
-
-type UserSchema = Schema<Query, EmptyMutation, EmptySubscription>;
+mod schema;
 
 #[tokio::main]
 async fn main() {
-  let schema = Schema::build(Query, EmptyMutation, EmptySubscription)
-    .enable_federation()
-    .finish();
+  dotenv::dotenv().ok();
+
+  let port = std::env::var("PORT").unwrap_or_else(|_| "4001".to_string());
+
+  let schema = schema::UserSchema::build(
+    schema::Query,
+    async_graphql::EmptyMutation,
+    async_graphql::EmptySubscription,
+  )
+  .enable_federation()
+  .finish();
 
   let app = Router::new()
     .route("/", get(graphiql).post(graphql_handler))
     .layer(Extension(schema));
 
-  let listener = tokio::net::TcpListener::bind("127.0.0.1:4001")
+  let listener = tokio::net::TcpListener::bind(format!("127.0.0.1:{}", port))
     .await
     .unwrap();
 
   axum::serve(listener, app).await.unwrap();
 }
 
-async fn graphql_handler(schema: Extension<UserSchema>, req: GraphQLRequest) -> GraphQLResponse {
+async fn graphql_handler(
+  schema: Extension<schema::UserSchema>,
+  req: GraphQLRequest,
+) -> GraphQLResponse {
   schema.execute(req.into_inner()).await.into()
 }
 

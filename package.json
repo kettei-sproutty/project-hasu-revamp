@@ -1,0 +1,16 @@
+{
+  "name": "project-hasu",
+  "version": "0.0.0",
+  "scripts": {
+    "prepare": "lefthook install",
+    "dev": "turbo run dev",
+    "dev:rover": "rover dev --supergraph-config ./supergraph.yml --client-timeout 300 -r 10"
+  },
+  "devDependencies": {
+    "@apollo/rover": "^0.28.1",
+    "@taplo/cli": "^0.7.0",
+    "lefthook": "^1.11.5",
+    "turbo": "^2.4.4"
+  },
+  "packageManager": "pnpm@10.2.1"
+}

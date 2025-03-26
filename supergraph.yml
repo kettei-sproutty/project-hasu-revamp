@@ -1,0 +1,8 @@
+federation_version: 2
+subgraphs:
+  user_service:
+    schema:
+      subgraph_url: http://127.0.0.1:4001
+  profile_service:
+    schema:
+      subgraph_url: http://127.0.0.1:4002

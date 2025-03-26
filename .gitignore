@@ -1,2 +1,12 @@
+# Rust
 /target
+
+# Node
+node_modules
+.turbo
+
+# Env
 .env
+
+# Misc
+.DS_Store

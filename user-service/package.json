@@ -1,0 +1,12 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cargo watch -x run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
